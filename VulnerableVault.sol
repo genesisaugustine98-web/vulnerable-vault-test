@@ -27,12 +27,12 @@ contract VulnerableVault {
         require(balance > 0, "Insufficient balance");
 
         // External call happens here
-        (bool success, ) = msg.sender.call{value: balance}("");
+        (bool success,) msg.sender.call{value: balance}("");
         require(success, "Failed to send Ether");
 
         // State update happens too late!
         userBalances[msg.sender] = 0;
-        
+
         emit Withdrawn(msg.sender, balance);
     }
 
