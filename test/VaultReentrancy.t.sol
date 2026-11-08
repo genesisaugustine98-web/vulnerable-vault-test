@@ -32,7 +32,7 @@ contract ReenteringAttacker {
     receive() external payable {
         received += msg.value;
         if (address(vault).balance > 0) {
-            (bool success,) address(vault).call(
+            (bool success,) = address(vault).call(
                 abi.encodeWithSelector(IVault.withdraw.selector)
             );
             if (expectReentryBlocked) {
