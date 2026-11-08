@@ -15,6 +15,22 @@ from inside its receive function and drain the vault. The fix — update state
 *before* the external call — is intentionally left out. This file must never be
 deployed with real money.
 
+## Reproducible reentrancy test
+
+The Foundry test suite proves two separate facts on a local EVM:
+
+- The deliberately vulnerable vault can be drained by the included re-entrant attacker.
+- The reference SecureVault applies checks-effects-interactions and preserves the unrelated depositor's balance during the same attack attempt.
+
+Run with Foundry:
+
+```bash
+forge test -vvv
+forge fmt --check
+```
+
+This is a deliberately vulnerable training fixture. Do not deploy VulnerableVault or use it to custody real assets.
+
 ## Verify it compiles
 
 Requires `solc` 0.8.24 or later (or Foundry):
@@ -36,3 +52,8 @@ broken, not the contract.
 ## License
 
 MIT — do whatever you want with it, just don't deploy it with real funds.
+
+
+## Scope and safety
+
+All exploit execution in this repository is a local unit test against the included toy contracts. It is not a test against a third-party, production or public blockchain contract. The reference implementation is educational and has not undergone an independent audit.
