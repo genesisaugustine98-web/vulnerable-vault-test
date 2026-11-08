@@ -21,7 +21,7 @@ contract SecureVault {
         // Update state before handing control to the recipient.
         userBalances[msg.sender] = 0;
 
-        (bool success, ) = msg.sender.call{value: balance}("");
+        (bool success,) msg.sender.call{value: balance}("");
         require(success, "Failed to send Ether");
 
         emit Withdrawn(msg.sender, balance);
