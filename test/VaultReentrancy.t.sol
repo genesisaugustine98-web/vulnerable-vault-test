@@ -32,9 +32,7 @@ contract ReenteringAttacker {
     receive() external payable {
         received += msg.value;
         if (address(vault).balance > 0) {
-            (bool success,) = address(vault).call(
-                abi.encodeWithSelector(IVault.withdraw.selector)
-            );
+            (bool success,) = address(vault).call(abi.encodeWithSelector(IVault.withdraw.selector));
             if (expectReentryBlocked) {
                 require(!success, "re-entry unexpectedly succeeded");
             } else {
